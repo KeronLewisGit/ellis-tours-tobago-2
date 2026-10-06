@@ -1,0 +1,250 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../../config/site.php';
+
+@theme {
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+        'Noto Color Emoji';
+    --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+
+    /* Gold, taken from the Ellis Tours shield logo */
+    --color-brand-50: #fdf8ec;
+    --color-brand-100: #f9edcf;
+    --color-brand-200: #f2d99b;
+    --color-brand-300: #e9c36a;
+    --color-brand-400: #dba73a;
+    --color-brand-500: #c48a1c;
+    --color-brand-600: #a06c12;
+    --color-brand-700: #855812;
+    --color-brand-800: #6c4815;
+    --color-brand-900: #5a3c16;
+
+    /* Sea, from the water at Buccoo Reef and the Nylon Pool */
+    --color-sea-50: #ecfbfa;
+    --color-sea-100: #cff5f2;
+    --color-sea-200: #a3ebe6;
+    --color-sea-300: #6ddad5;
+    --color-sea-400: #37c0bd;
+    --color-sea-500: #14a3a2;
+    --color-sea-600: #0c8384;
+    --color-sea-700: #0e696b;
+
+    /* Ink (deep rainforest green) and warm sand neutrals */
+    --color-ink: #0e1f19;
+    --color-ink-soft: #1a342a;
+    --color-paper: #f9f6ee;
+    --color-paper-deep: #f0ebdd;
+    --color-line: #e4dccb;
+    --color-muted: #5d665f;
+
+    --shadow-card: 0 1px 2px rgb(14 31 25 / 0.04), 0 8px 24px -12px rgb(14 31 25 / 0.14);
+    --shadow-lift: 0 2px 4px rgb(14 31 25 / 0.05), 0 24px 48px -20px rgb(14 31 25 / 0.32);
+
+    --animate-marquee: marquee 44s linear infinite;
+    --animate-float: float 7s ease-in-out infinite;
+
+    @keyframes marquee {
+        to {
+            transform: translateX(-50%);
+        }
+    }
+    @keyframes float {
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-8px);
+        }
+    }
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 6.5rem;
+        -webkit-text-size-adjust: 100%;
+    }
+    body {
+        @apply bg-paper font-sans text-ink antialiased;
+    }
+    h1,
+    h2,
+    h3,
+    h4 {
+        @apply font-display text-balance;
+    }
+    p {
+        text-wrap: pretty;
+    }
+    ::selection {
+        @apply bg-brand-600 text-white;
+    }
+    :focus-visible {
+        @apply outline-2 outline-offset-2 outline-brand-600;
+    }
+    [x-cloak] {
+        display: none !important;
+    }
+    button,
+    [role='button'],
+    summary {
+        cursor: pointer;
+    }
+}
+
+@layer components {
+    .wrap {
+        @apply mx-auto w-full max-w-7xl px-5 sm:px-8;
+    }
+    .section {
+        @apply py-16 sm:py-24;
+    }
+    .eyebrow {
+        @apply inline-flex items-center gap-2 text-xs font-semibold tracking-[0.2em] text-brand-700 uppercase;
+    }
+    .eyebrow::before {
+        content: '';
+        @apply h-px w-6 bg-brand-500;
+    }
+    .h-display {
+        @apply font-display text-4xl leading-[1.05] font-semibold tracking-tight sm:text-5xl lg:text-6xl;
+    }
+    .h-section {
+        @apply font-display text-3xl leading-[1.1] font-semibold tracking-tight sm:text-[2.6rem];
+    }
+    .h-card {
+        @apply font-display text-xl leading-tight font-semibold;
+    }
+    .lead {
+        @apply text-lg leading-relaxed text-muted;
+    }
+
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold whitespace-nowrap transition duration-200;
+    }
+    .btn-primary {
+        @apply bg-brand-600 text-white shadow-sm hover:bg-brand-700 active:scale-[0.98];
+    }
+    .btn-dark {
+        @apply bg-ink text-white hover:bg-ink-soft active:scale-[0.98];
+    }
+    .btn-light {
+        @apply bg-white text-ink ring-1 ring-line hover:ring-ink/40 active:scale-[0.98];
+    }
+    .btn-ghost {
+        @apply text-ink hover:bg-ink/5;
+    }
+    .btn-onDark {
+        @apply bg-white/10 text-white ring-1 ring-white/20 hover:bg-white/20;
+    }
+    .btn-whatsapp {
+        @apply bg-emerald-700 text-white shadow-sm hover:bg-emerald-800 active:scale-[0.98];
+    }
+    .link {
+        @apply font-semibold text-brand-700 underline decoration-brand-300 underline-offset-4 transition hover:decoration-brand-700;
+    }
+    .link-arrow {
+        @apply inline-flex items-center gap-1.5 text-sm font-semibold text-ink transition hover:gap-2.5 hover:text-brand-700;
+    }
+
+    .card {
+        @apply rounded-3xl bg-white p-6 shadow-card ring-1 ring-line/70 sm:p-8;
+    }
+    .chip {
+        @apply inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-xs font-semibold text-ink ring-1 ring-line;
+    }
+    .icon-tile {
+        @apply grid size-12 shrink-0 place-items-center rounded-2xl bg-brand-50 text-brand-700;
+    }
+
+    .label {
+        @apply mb-1.5 block text-sm font-medium text-ink;
+    }
+    .input {
+        @apply block w-full rounded-xl border-0 bg-white px-3.5 py-2.5 text-[15px] text-ink shadow-sm ring-1 ring-line transition placeholder:text-muted/60 focus:ring-2 focus:ring-brand-600 focus:outline-none;
+    }
+    select.input {
+        @apply pr-9;
+    }
+    .input-error {
+        @apply ring-rose-500;
+    }
+    .field-error {
+        @apply mt-1.5 text-sm font-medium text-rose-700;
+    }
+    .hint {
+        @apply mt-1.5 text-xs text-muted;
+    }
+    /* Selectable option cards: <label class="option"><input type="radio" class="peer sr-only"><span>…</span></label> */
+    .option > span {
+        @apply flex h-full cursor-pointer items-center gap-2 rounded-2xl bg-white px-4 py-3 text-sm font-medium ring-1 ring-line transition hover:ring-ink/40;
+    }
+    .option > input:checked + span {
+        @apply bg-brand-50 ring-2 ring-brand-600;
+    }
+    .option > input:focus-visible + span {
+        @apply outline-2 outline-offset-2 outline-brand-600;
+    }
+
+    .table-clean {
+        @apply w-full text-left text-sm;
+    }
+    .table-clean th {
+        @apply border-b border-line px-4 py-3 text-xs font-semibold tracking-wider text-muted uppercase;
+    }
+    .table-clean td {
+        @apply border-b border-line/70 px-4 py-3.5 align-top;
+    }
+    .table-clean tr:last-child td {
+        @apply border-b-0;
+    }
+
+    /* Long-form content (tour descriptions) */
+    .prose-site {
+        @apply text-[17px] leading-relaxed text-ink/80;
+    }
+    .prose-site > * + * {
+        @apply mt-5;
+    }
+
+    /* Fine gold rule used on dark bands */
+    .gilt {
+        background-image: linear-gradient(90deg, transparent, var(--color-brand-400), transparent);
+    }
+    .grid-ink {
+        background-image: radial-gradient(rgb(255 255 255 / 0.07) 1px, transparent 1px);
+        background-size: 22px 22px;
+    }
+}
+
+/* Scroll reveal (progressive enhancement: only hides when JS has tagged <html>) */
+.js [data-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+        opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+        transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+}
+.js [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+    .js [data-reveal] {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+    .animate-marquee,
+    .animate-float {
+        animation: none;
+    }
+}

@@ -1,0 +1,25 @@
+# Shared hosting (Hostinger): the whole project lives in public_html, so the
+# web root is this folder rather than public/. Serve everything from public/
+# and keep the rest of the project (.env, storage, database, vendor) private.
+
+Options -Indexes
+
+# Project folders (app/, storage/, ...) are not part of the site, so do not
+# add a trailing slash to them; let the request fall through to Laravel.
+DirectorySlash Off
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{DOCUMENT_ROOT}/public/$1 !-d
+    RewriteRule ^(.+)/$ /$1 [L,R=301]
+
+    # Send Every Request Into public/...
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+# Never serve these directly, even if rewriting is unavailable.
+<FilesMatch "^\.env|\.(sqlite|sqlite-journal|log)$">
+    Require all denied
+</FilesMatch>
